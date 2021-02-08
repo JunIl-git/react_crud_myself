@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import Nav from './Component/Nav';
 import Header from './Component/Header';
 import Controls from './Component/Controls';
 import Contents from './Component/Contents'
 
 function App() {
-  
   //Nav 
   const [mainTitle, setMainTitle] = useState(
     {
@@ -36,6 +35,8 @@ function App() {
       id : 4
     },
   ])
+  
+  const [id, setId] = useState(5);
 
   const [controls, setControl] = useState([
     {
@@ -51,15 +52,74 @@ function App() {
       id : 3
     }
   ])
-  const [ currentNumber, setCurrentNumber ] = useState(1);
+  const [ currentValue, setCurrentValue ] = useState(1);
+
+
+  const handleTitleClick = () => {
+    setCurrentValue(0);
+  }
+
+  const handleNavClick = e => {
+    setCurrentValue(e.target.id);
+  }
+
+  const handleControlClick = e => {
+    setCurrentValue(e.target.innerHTML);
+  }
+
+  const handleContentsSubmit = e => {
+    e.preventDefault();
+    console.log(e)
+    const target = e.target;
+    const childNodes = target.childNodes;
+    let title = childNodes[1].value;
+    let text = childNodes[2].value;
+    if(childNodes[1].value === "" ){
+      return;
+    } else {
+      const concatList = list.concat({
+        title : title,
+        text : text,
+        id : id,
+      })
+      setId(id+1)
+      setList(concatList);
+      setCurrentValue(id);
+      childNodes[1].value = "";
+      childNodes[2].value = "";
+    }
+  }
+
+  const handleContentsClick = e => {
+    e.preventDefault();
+    const target = e.target.parentNode;
+    const childNodes = target.childNodes;
+    console.log(childNodes)
+    let title = childNodes[1].value;
+    let text = childNodes[2].value;
+    if(childNodes[1].value === "" ){
+      return;
+    } else {
+      const concatList = list.concat({
+        title : title,
+        text : text,
+        id : id,
+      })
+      setId(id+1)
+      setList(concatList);
+      setCurrentValue(id);
+      childNodes[1].value = "";
+      childNodes[2].value = "";
+    }
+  }
 
 
   return (
     <>
-      <Header text={mainTitle}/>
-      <Nav list={list}/>
-      <Controls controls={controls}/>
-      <Contents text={mainTitle} list={list} currentNumber={currentNumber}/>
+      <Header text={mainTitle} onClick={handleTitleClick}/>
+      <Nav list={list} onClick={handleNavClick}/>
+      <Controls controls={controls} onClick={handleControlClick}/>
+      <Contents id={id} mainTitle={mainTitle} list={list} onSubmit={handleContentsSubmit} onClick={handleContentsClick} currentValue={currentValue}/>
     </>
   );
 }
