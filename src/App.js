@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useCallback} from 'react';
 import Nav from './Component/Nav';
 import Header from './Component/Header';
 import Controls from './Component/Controls';
@@ -8,36 +8,26 @@ function App() {
   //Nav 
   const [mainTitle, setMainTitle] = useState(
     {
-      title : "React",
-      text : "CRUD 혼자 만들기"
+      title : "React ",
+      text : "CRUD 혼자 만들기",
+      id : 1
     } 
   )
 
-  const [ list, setList] = useState([
-    {
-      title : "HTML",
-      text : "HTML is HyperText Markup Language",
-      id : 1
-    },
-    {
-      title : "CSS",
-      text : "CSS is Cascading Stlye Sheets",
-      id : 2    
-    },
-    {
-      title : "Javascript",
-      text : "Javascript is for interactive!",
-      id : 3
-    },
-    {
-      title : "React",
-      text : "React is library of javascript",
-      id : 4
-    },
-  ])
-  
-  const [id, setId] = useState(5);
+  const [ list, setList] = useState([])
 
+  const loadList = useCallback(() => {
+    const currentList = localStorage.getItem("list");
+    if ( currentList !== null){
+      const parsedList = JSON.parse(currentList);
+      setList(parsedList);
+    }
+  },[list])
+loadList();
+  
+
+  const [id, setId] = useState(5);
+  const [mode, setMode] = useState("");
   const [controls, setControl] = useState([
     {
       title : "Create",
@@ -46,55 +36,29 @@ function App() {
     {
       title : "Update",
       id : 2
-    },
-    {
-      title : "Delete",
-      id : 3
     }
   ])
   const [ currentValue, setCurrentValue ] = useState(1);
 
-
   const handleTitleClick = () => {
     setCurrentValue(0);
+    setMode("");
   }
 
   const handleNavClick = e => {
     setCurrentValue(e.target.id);
+    setMode("");
   }
 
   const handleControlClick = e => {
-    setCurrentValue(e.target.innerHTML);
+    setMode(e.target.innerHTML);
   }
 
-  const handleContentsSubmit = e => {
-    e.preventDefault();
-    console.log(e)
-    const target = e.target;
-    const childNodes = target.childNodes;
-    let title = childNodes[1].value;
-    let text = childNodes[2].value;
-    if(childNodes[1].value === "" ){
-      return;
-    } else {
-      const concatList = list.concat({
-        title : title,
-        text : text,
-        id : id,
-      })
-      setId(id+1)
-      setList(concatList);
-      setCurrentValue(id);
-      childNodes[1].value = "";
-      childNodes[2].value = "";
-    }
-  }
 
   const handleContentsClick = e => {
     e.preventDefault();
     const target = e.target.parentNode;
     const childNodes = target.childNodes;
-    console.log(childNodes)
     let title = childNodes[1].value;
     let text = childNodes[2].value;
     if(childNodes[1].value === "" ){
@@ -110,16 +74,36 @@ function App() {
       setCurrentValue(id);
       childNodes[1].value = "";
       childNodes[2].value = "";
+      saveLocal(concatList);
     }
   }
 
+  const getProps = (item) => {
+    setMode("");
+    setList(item);
+  }
+
+  const getInfo = (item) => {
+    setMode("");
+    setMainTitle(item)
+  }
+
+  const getList = item => {
+    setMode("");
+    setList(item);
+    setCurrentValue(0);
+  }
+
+  const saveLocal = (e) => {
+    localStorage.setItem("list", JSON.stringify(e));
+  }
 
   return (
     <>
       <Header text={mainTitle} onClick={handleTitleClick}/>
       <Nav list={list} onClick={handleNavClick}/>
-      <Controls controls={controls} onClick={handleControlClick}/>
-      <Contents id={id} mainTitle={mainTitle} list={list} onSubmit={handleContentsSubmit} onClick={handleContentsClick} currentValue={currentValue}/>
+      <Controls getList={getList} list={list} currentValue={currentValue} controls={controls} onClick={handleControlClick}/>
+      <Contents saveLocal={saveLocal} getInfo={getInfo} mainTitle={mainTitle} getProps={getProps} mode={mode} id={id} mainTitle={mainTitle} list={list} onClick={handleContentsClick} currentValue={currentValue}/>
     </>
   );
 }
