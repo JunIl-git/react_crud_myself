@@ -1,4 +1,4 @@
-import React, {useState, useRef, useCallback} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import Nav from './Component/Nav';
 import Header from './Component/Header';
 import Controls from './Component/Controls';
@@ -16,17 +16,19 @@ function App() {
 
   const [ list, setList] = useState([])
 
-  const loadList = useCallback(() => {
-    const currentList = localStorage.getItem("list");
-    if ( currentList !== null){
-      const parsedList = JSON.parse(currentList);
-      setList(parsedList);
+  useEffect(() => {
+    const loadList = () => {
+      const currentList = localStorage.getItem("list");
+      if (currentList !== null) {
+        const parsedList = JSON.parse(currentList);
+        setList(parsedList);
+      }
     }
-  },[list])
-loadList();
+    loadList();
+  }, [])
   
 
-  const [id, setId] = useState(5);
+  const [id, setId] = useState(1);
   const [mode, setMode] = useState("");
   const [controls, setControl] = useState([
     {
