@@ -1,4 +1,4 @@
-import React, {useState, useRef, useCallback} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import Nav from './Component/Nav';
 import Header from './Component/Header';
 import Controls from './Component/Controls';
@@ -16,17 +16,20 @@ function App() {
 
   const [ list, setList] = useState([])
 
-  const loadList = useCallback(() => {
-    const currentList = localStorage.getItem("list");
-    if ( currentList !== null){
-      const parsedList = JSON.parse(currentList);
-      setList(parsedList);
+  useEffect(()=> {
+    const loadList = () => {
+      const currentList = localStorage.getItem("list");
+      if ( currentList !== null){
+        const parsedList = JSON.parse(currentList);
+        setList(parsedList);
+      }
     }
-  },[list])
-loadList();
+  loadList();
+  },[])
+
   
 
-  const [id, setId] = useState(5);
+  const [id, setId] = useState(1);
   const [mode, setMode] = useState("");
   const [controls, setControl] = useState([
     {
@@ -102,7 +105,7 @@ loadList();
     <>
       <Header text={mainTitle} onClick={handleTitleClick}/>
       <Nav list={list} onClick={handleNavClick}/>
-      <Controls getList={getList} list={list} currentValue={currentValue} controls={controls} onClick={handleControlClick}/>
+      <Controls saveLocal={saveLocal} getList={getList} list={list} currentValue={currentValue} controls={controls} onClick={handleControlClick}/>
       <Contents saveLocal={saveLocal} getInfo={getInfo} mainTitle={mainTitle} getProps={getProps} mode={mode} id={id} mainTitle={mainTitle} list={list} onClick={handleContentsClick} currentValue={currentValue}/>
     </>
   );

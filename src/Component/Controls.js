@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Controls = ({getList, list, currentValue, controls, onClick}) => {
+const Controls = ({saveLocal, getList, list, currentValue, controls, onClick}) => {
     const listFilter = list.filter(item => {
         return currentValue == item.id
     })
@@ -17,6 +17,7 @@ const Controls = ({getList, list, currentValue, controls, onClick}) => {
                 console.log(typeof(currentValue))
                 console.log(deleteList);
                 getList(deleteList);
+                saveLocal(deleteList);
             } else {
                 return;
             }
