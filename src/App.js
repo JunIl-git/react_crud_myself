@@ -14,32 +14,18 @@ function App() {
     } 
   )
 
-  const [ list, setList] = useState([])
+  const [ list, setList] = useState([]);
 
-<<<<<<< HEAD
-  useEffect(()=> {
-    const loadList = () => {
-      const currentList = localStorage.getItem("list");
-      if ( currentList !== null){
-=======
   useEffect(() => {
     const loadList = () => {
       const currentList = localStorage.getItem("list");
       if (currentList !== null) {
->>>>>>> 572e17750efa6162b2dafe42b02fc9ce57c06bcf
         const parsedList = JSON.parse(currentList);
         setList(parsedList);
       }
     }
-<<<<<<< HEAD
   loadList();
   },[])
-
-=======
-    loadList();
-  }, [])
->>>>>>> 572e17750efa6162b2dafe42b02fc9ce57c06bcf
-  
 
   const [id, setId] = useState(1);
   const [mode, setMode] = useState("");

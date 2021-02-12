@@ -2,8 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-const styledHeader = header``
-
 const Header = ({text, onClick}) => {
     return(
         <header onClick={onClick}>
