@@ -1,8 +1,49 @@
 import React from 'react';
 import Create from './Create';
 import Update from './Update';
+import styled from 'styled-components';
 
-const Contents = ({saveTitle, saveLocal, getInfo, currentValue, mainTitle, list, onSubmit, onClick, mode, getProps, id })=> {
+const StyledContentArticle = styled.article `
+    height: 350px;
+    margin-top: 30px;
+`
+
+const StyledContentsTitle = styled.h2`
+    font-size: 22px;
+    text-align: center;
+    margin-bottom: 20px;
+    border: 3px solid #f8c291;
+    border-radius:10px;
+    overflow: auto;
+    &::-webkit-scrollbar {
+        width: 15px;
+        background: #f7d6b9;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: #F8C291;
+        border-radius: 15px;
+    }
+`
+
+const StlyedContentsText = styled.div`
+    
+    height: 200px;
+    padding: 20px;
+    overflow-y: auto;
+    white-space:pre-wrap;
+    border: 3px solid #f8c291;
+    border-radius: 10px;
+    &::-webkit-scrollbar {
+        width: 15px;
+        background: #f7d6b9;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: #F8C291;
+        border-radius: 15px;
+    }
+`
+
+const Contents = ({ saveTitle, saveLocal, getInfo, currentValue, mainTitle, list, onSubmit, onClick, mode, getProps, id })=> {
     const listFilter = list.filter(item => {
         return currentValue == item.id
     })
@@ -49,7 +90,6 @@ const Contents = ({saveTitle, saveLocal, getInfo, currentValue, mainTitle, list,
             }
             getInfo(changeTitle);
             saveTitle(changeTitle);
-            
         }
         
     }
@@ -57,17 +97,17 @@ const Contents = ({saveTitle, saveLocal, getInfo, currentValue, mainTitle, list,
     if(mode === ""){
         if(currentValue === 0){
             return (
-                <article>
-                    <h2>{mainTitle.title}</h2>   
-                    <div>{mainTitle.text}</div>
-                </article>
+                <StyledContentArticle>
+                    <StyledContentsTitle>{mainTitle.title}</StyledContentsTitle>   
+                    <StlyedContentsText>{mainTitle.text}</StlyedContentsText>
+                </StyledContentArticle>
             )
         } else {
             return(
-                <div>
-                    <h2>{list[0] == undefined ? null :listFilter[0].title}</h2>
-                    <div>{list[0] == undefined ? null : listFilter[0].text}</div>
-                </div>
+                <StyledContentArticle>
+                    <StyledContentsTitle>{list[0] == undefined ? null :listFilter[0].title}</StyledContentsTitle>
+                    <StlyedContentsText>{list[0] == undefined ? null : listFilter[0].text}</StlyedContentsText>
+                </StyledContentArticle>
             )        
         }
     } else if(mode === "Create" || mode === "Update" || mode === "Delete"){

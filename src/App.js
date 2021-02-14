@@ -8,7 +8,7 @@ function App() {
   //Nav 
   const [mainTitle, setMainTitle] = useState(
     {
-      title : "React ",
+      title : "React",
       text : "CRUD",
       id : 1
     } 
@@ -28,6 +28,11 @@ function App() {
         const parsedTitle = JSON.parse(currentTitle);
         setMainTitle(parsedTitle);
       }
+      const currentLSValue = localStorage.getItem("id");
+      if( currentLSValue !== null) {
+        const parsedValue = JSON.parse(currentLSValue);
+        setId(parsedValue+1);
+      }
     }
   loadList();
   },[])
@@ -44,7 +49,7 @@ function App() {
       id : 2
     }
   ])
-  const [ currentValue, setCurrentValue ] = useState(1);
+  const [ currentValue, setCurrentValue ] = useState(0);
 
   const handleTitleClick = () => {
     setCurrentValue(0);
@@ -81,6 +86,7 @@ function App() {
       childNodes[1].value = "";
       childNodes[2].value = "";
       saveLocal(concatList);
+      saveCurrentValue(id);
     }
   }
 
@@ -107,12 +113,16 @@ function App() {
   const saveTitle = e => {
     localStorage.setItem("title", JSON.stringify(e));
   }
+
+  const saveCurrentValue = e => {
+    localStorage.setItem("id", JSON.stringify(e));
+  }
   return (
     <>
       <Header text={mainTitle} onClick={handleTitleClick}/>
       <Nav list={list} onClick={handleNavClick}/>
       <Controls saveLocal={saveLocal} getList={getList} list={list} currentValue={currentValue} controls={controls} onClick={handleControlClick}/>
-      <Contents saveTitle={saveTitle} saveLocal={saveLocal} getInfo={getInfo} mainTitle={mainTitle} getProps={getProps} mode={mode} id={id} mainTitle={mainTitle} list={list} onClick={handleContentsClick} currentValue={currentValue}/>
+      <Contents saveCurrentValue={saveCurrentValue} saveTitle={saveTitle} saveLocal={saveLocal} getInfo={getInfo} mainTitle={mainTitle} getProps={getProps} mode={mode} id={id} mainTitle={mainTitle} list={list} onClick={handleContentsClick} currentValue={currentValue}/>
     </>
   );
 }

@@ -13,7 +13,16 @@ const StlyedNav = styled.nav`
     box-shadow: 0 6px 12px -2px rgba(50, 50, 93, 0.25),
     0 3px 7px -3px rgba(0, 0, 0, 0.3);
     padding: 30px;
-    overflow: auto;
+    overflow-y: auto;
+    white-space:normal;
+    &::-webkit-scrollbar {
+        width: 15px;
+        background: #f7d6b9;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: #F8C291;
+        border-radius: 15px;
+    }
 
 `
 const StlyedTitle = styled.div`

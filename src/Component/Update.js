@@ -14,20 +14,23 @@ const StyledModeTitle = styled.h2`
     margin-bottom: 20px;
 `
 const StyledInput = styled.input`
-    background: #c8d6e5;
     border: 3px solid #f8c291;
     border-radius: 10px;
     margin-bottom: 20px;
     height: 40px;
     outline: none;
     font-size: 22px;
+    font-family: "Do Hyeon", sans-serif;
     &::placeholder {
         font-family: "Do Hyeon", sans-serif;
+    }
+    &:focus {
+        background: #c8d6e5;
     }
 `
 
 const StyledTextarea = styled.textarea`
-    background: #c8d6e5;
+    font-family: "Do Hyeon", sans-serif;
     resize: none;
     height: 200px;
     border: 3px solid #f8c291;
@@ -39,6 +42,17 @@ const StyledTextarea = styled.textarea`
     border-radius: 10px;
     &::placeholder {
         font-family: "Do Hyeon", sans-serif;
+    }
+    &:focus {
+        background: #c8d6e5;
+    }
+    &::-webkit-scrollbar {
+        width: 15px;
+        background: #f7d6b9;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: #F8C291;
+        border-radius: 15px;
     }
 `
 
