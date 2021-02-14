@@ -2,7 +2,7 @@ import React from 'react';
 import Create from './Create';
 import Update from './Update';
 
-const Contents = ({saveLocal, getInfo, currentValue, mainTitle, list, onSubmit, onClick, mode, getProps, id })=> {
+const Contents = ({saveTitle, saveLocal, getInfo, currentValue, mainTitle, list, onSubmit, onClick, mode, getProps, id })=> {
     const listFilter = list.filter(item => {
         return currentValue == item.id
     })
@@ -48,6 +48,8 @@ const Contents = ({saveLocal, getInfo, currentValue, mainTitle, list, onSubmit, 
                 [childNodes[2].name] : text 
             }
             getInfo(changeTitle);
+            saveTitle(changeTitle);
+            
         }
         
     }

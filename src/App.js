@@ -9,7 +9,7 @@ function App() {
   const [mainTitle, setMainTitle] = useState(
     {
       title : "React ",
-      text : "CRUD 혼자 만들기",
+      text : "CRUD",
       id : 1
     } 
   )
@@ -22,6 +22,11 @@ function App() {
       if (currentList !== null) {
         const parsedList = JSON.parse(currentList);
         setList(parsedList);
+      }
+      const currentTitle = localStorage.getItem("title");
+      if( currentTitle !== null) {
+        const parsedTitle = JSON.parse(currentTitle);
+        setMainTitle(parsedTitle);
       }
     }
   loadList();
@@ -99,12 +104,15 @@ function App() {
     localStorage.setItem("list", JSON.stringify(e));
   }
 
+  const saveTitle = e => {
+    localStorage.setItem("title", JSON.stringify(e));
+  }
   return (
     <>
       <Header text={mainTitle} onClick={handleTitleClick}/>
       <Nav list={list} onClick={handleNavClick}/>
       <Controls saveLocal={saveLocal} getList={getList} list={list} currentValue={currentValue} controls={controls} onClick={handleControlClick}/>
-      <Contents saveLocal={saveLocal} getInfo={getInfo} mainTitle={mainTitle} getProps={getProps} mode={mode} id={id} mainTitle={mainTitle} list={list} onClick={handleContentsClick} currentValue={currentValue}/>
+      <Contents saveTitle={saveTitle} saveLocal={saveLocal} getInfo={getInfo} mainTitle={mainTitle} getProps={getProps} mode={mode} id={id} mainTitle={mainTitle} list={list} onClick={handleContentsClick} currentValue={currentValue}/>
     </>
   );
 }

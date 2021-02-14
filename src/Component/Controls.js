@@ -1,4 +1,31 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const StlyedControls = styled.ul`
+    width: 100px;
+    height: 100px;
+    position : absolute;
+    right: -150px;
+    bottom: 0px;
+    background: white;
+    border-radius: 10px;
+    font-size: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    box-shadow: 0 6px 12px -2px rgba(50, 50, 93, 0.25), 0 3px 7px -3px #0000004d;
+`
+const StyledBtn = styled.button`
+    border: none;
+    font-size: 22px;
+    color: red;
+    font-family: "Do Hyeon", sans-serif;
+    padding: 0;
+    cursor: pointer;
+    outline : none;
+`
+
 
 const Controls = ({saveLocal, getList, list, currentValue, controls, onClick}) => {
     const listFilter = list.filter(item => {
@@ -26,12 +53,12 @@ const Controls = ({saveLocal, getList, list, currentValue, controls, onClick}) =
     }
 
     return (
-        <ul>
+        <StlyedControls>
             {controls.map(control => {
                 return <li key={control.id}><a href="#" onClick={onClick}>{control.title}</a></li>
             })}
-            <button onClick={handleClickDelete} >Delete</button>
-        </ul>
+            <StyledBtn onClick={handleClickDelete} >Delete</StyledBtn>
+        </StlyedControls>
     )
 }
 
